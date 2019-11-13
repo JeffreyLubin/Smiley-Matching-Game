@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Matching Game</title>
+        <meta charset='utf-8'>
+        <style>
+            img {
+                position: absolute;
+            }
+
+            div {
+                position: absolute;
+                width: 500px;
+                height: 500px;
+            }
+
+            #rightSide {
+                left: 500px;
+                border-left: 1px solid black;
+            }
+        </style>
+    </head>
+    <body onload="generateFaces()">
+        <h1>Matching Game</h1>
+        <h2>Click on the extra smiley face on the left!</h2>
+        <h3>Score: 0</h3>
+        <div id="leftSide"></div>
+        <div id="rightSide"></div>
+
+        <script>
+                let numberOfFaces=5;
+                let leftSide=document.getElementById("leftSide");
+                let theBody=document.getElementsByTagName("body")[0];
+                let rightSide = document.getElementById("rightSide");
+                let score = document.getElementsByTagName("h3")[0];
+                let scoretotal = 0;
+                   
+                function generateFaces(){
+                  for(i=0; i<numberOfFaces; i++){
+                      var img = document.createElement("img");
+                      img.src="smile.png";
+                      let random_top = (Math.floor(Math.random() * 400));
+                      let random_left = (Math.floor(Math.random() * 400));
+                      img.style.left= random_left +"px";
+                      img.style.top= random_top +"px";
+                      leftSide.appendChild(img);
+                      var faces = leftSide.cloneNode(true);
+                      rightSide.appendChild(faces);
+                      faces.removeChild(faces.lastChild);
+                  }
+                  
+                  
+                  
+
+                  leftSide.lastChild.onclick= function nextlevel(event){
+                      event.stopPropagation();
+                      console.log("It works?");
+                      numberOfFaces += 5;
+                      scoretotal++
+                      score.innerHTML="Score: "+scoretotal;
+                      while(leftSide.firstChild)
+                        leftSide.removeChild(leftSide.firstChild);
+                        while(rightSide.firstChild)
+                        rightSide.removeChild(rightSide.firstChild);
+                      generateFaces();
+                  }
+
+                  theBody.onclick = function gameOver(){
+                    alert("Game Over! Your score is "+scoretotal);
+                    theBody.onclick=null;
+                    leftSide.lastChild.onclick=null;
+
+                  }
+
+               }
+               
+               </script>
+    </body>
+    
+</html>
